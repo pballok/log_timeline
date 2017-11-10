@@ -1,6 +1,7 @@
 #include <string>
 
-class LogLine {
+class LogLine
+{
 public:
   LogLine(std::string rawLine);
   LogLine(const LogLine& other) = delete;
@@ -10,7 +11,7 @@ public:
   virtual ~LogLine();
 
   std::string rawLine() const noexcept;
-  
+
 private:
   std::string rawLine_;
 };

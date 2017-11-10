@@ -9,24 +9,6 @@ set(CMAKE_CXX_FLAGS "-std=c++1z -Wall -Wextra -Werror")
 
 if(ENABLE_ASTYLE)
 
-    list(APPEND ASTYLE_CMAKE_ARGS
-        "-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}"
-    )
-
-    ExternalProject_Add(
-        astyle
-        GIT_REPOSITORY      https://github.com/Bareflank/astyle.git
-        GIT_TAG             v1.2
-        GIT_SHALLOW         1
-        CMAKE_ARGS          ${ASTYLE_CMAKE_ARGS}
-        PREFIX              ${CMAKE_BINARY_DIR}/external/astyle/prefix
-        TMP_DIR             ${CMAKE_BINARY_DIR}/external/astyle/tmp
-        STAMP_DIR           ${CMAKE_BINARY_DIR}/external/astyle/stamp
-        DOWNLOAD_DIR        ${CMAKE_BINARY_DIR}/external/astyle/download
-        SOURCE_DIR          ${CMAKE_BINARY_DIR}/external/astyle/src
-        BINARY_DIR          ${CMAKE_BINARY_DIR}/external/astyle/build
-    )
-
     list(APPEND ASTYLE_ARGS
         --style=1tbs
         --lineend=linux
@@ -34,8 +16,8 @@ if(ENABLE_ASTYLE)
         --pad-oper
         --unpad-paren
         --break-closing-brackets
-        --align-pointer=name
-        --align-reference=name
+        --align-pointer=type
+        --align-reference=type
         --indent-preproc-define
         --indent-switches
         --indent-col1-comments
@@ -48,14 +30,11 @@ if(ENABLE_ASTYLE)
         --close-templates
         --add-brackets
         --break-after-logical
-        ${CMAKE_SOURCE_DIR}/include/*.h
-        ${CMAKE_SOURCE_DIR}/src/*.cpp
-        ${CMAKE_SOURCE_DIR}/test/*.cpp
     )
 
     add_custom_target(
         format
-        COMMAND ${CMAKE_BINARY_DIR}/bin/astyle ${ASTYLE_ARGS}
+        COMMAND astyle ${ASTYLE_ARGS} ${CMAKE_SOURCE_DIR}/include/*.h ${CMAKE_SOURCE_DIR}/src/*.cpp ${CMAKE_SOURCE_DIR}/tests/*.cpp
         COMMENT "running astyle"
     )
 
