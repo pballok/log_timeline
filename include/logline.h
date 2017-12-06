@@ -8,7 +8,7 @@ public:
   LogLine(LogLine&& other) = delete;
   LogLine& operator =(const LogLine& other) = delete;
   LogLine& operator =(LogLine&& other) = delete;
-  virtual ~LogLine();
+  ~LogLine();
 
   std::string rawLine() const noexcept;
 

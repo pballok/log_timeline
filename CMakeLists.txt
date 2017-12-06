@@ -2,9 +2,6 @@ cmake_minimum_required(VERSION 3.6)
 
 project(LogTimeline)
 
-include(ExternalProject)
-find_package(Git REQUIRED)
-
 set(CMAKE_CXX_FLAGS "-std=c++1z -Wall -Wextra -Werror")
 
 if(ENABLE_ASAN)
@@ -14,7 +11,10 @@ if(ENABLE_ASAN)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-omit-frame-pointer")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=leak")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 endif()
+
 
 list(APPEND ASTYLE_ARGS
     --style=1tbs
@@ -44,10 +44,6 @@ add_custom_target(
     COMMAND astyle ${ASTYLE_ARGS} ${CMAKE_SOURCE_DIR}/include/*.h ${CMAKE_SOURCE_DIR}/src/*.cpp ${CMAKE_SOURCE_DIR}/tests/*.cpp
     COMMENT "running astyle"
 )
-
-if(NOT ENABLE_ASAN)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
-endif()
 
 enable_testing()
 
