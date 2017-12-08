@@ -1,22 +1,11 @@
 #include "logsource.h"
 
-LogSource::LogSource(std::regex timestampRegEx)
-  : timestampRegEx_(std::move(timestampRegEx))
+void LogSource::addLine(const std::string& rawLine) noexcept
 {
-
-}
-
-LogSource::~LogSource()
-{
-
-}
-
-void LogSource::addLine(const std::string&) noexcept
-{
-
+  logLines_.emplace_back(rawLine);
 }
 
 std::size_t LogSource::lineCount() const noexcept
 {
-  return 0;
+  return logLines_.size();
 }
