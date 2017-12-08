@@ -2,9 +2,15 @@
 
 #include "logline.h"
 
-TEST_CASE("Raw Line", "[LogLine]")
+SCENARIO("Getting the raw line back", "[LogLine]")
 {
-  LogLine ll("2017-08-02 17:59:38.123 Error: Something bad happened");
+  GIVEN("A LogLine containing a given line from a log")
+  {
+    LogLine ll("2017-08-02 17:59:38.123 Error: Something bad happened");
 
-  REQUIRE(ll.rawLine() == "2017-08-02 17:59:38.123 Error: Something bad happened");
+    THEN("rawLine should return with the same line")
+    {
+      REQUIRE(ll.rawLine() == "2017-08-02 17:59:38.123 Error: Something bad happened");
+    }
+  }
 }

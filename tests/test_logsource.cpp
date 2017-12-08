@@ -2,13 +2,24 @@
 
 #include "logsource.h"
 
-TEST_CASE("Log Source", "Add Line")
+SCENARIO("Adding lines to a LogSource", "[LogSource]")
 {
-  LogSource ls(std::regex("timeregex"));
+  GIVEN("An empty LogSource with no lines")
+  {
+    LogSource ls(std::regex("timeregex"));
 
-  ls.addLine("2017-01-27 17:34:29.346 INFO My First Log Line");
-  ls.addLine("2017-01-27 17:34:30.378 INFO My First Log Line");
-  ls.addLine("2017-01-27 17:34:31.592 INFO My First Log Line");
+    REQUIRE(ls.lineCount() == 0);
 
-  REQUIRE(ls.lineCount() == 3);
+    WHEN("three new lines are added")
+    {
+      ls.addLine("2017-01-27 17:34:29.346 INFO My First Log Line");
+      ls.addLine("2017-01-27 17:34:30.378 INFO My Second Log Line");
+      ls.addLine("2017-01-27 17:34:31.592 INFO My Third Log Line");
+
+      THEN("the number of lines should be three")
+      {
+        REQUIRE(ls.lineCount() == 3);
+      }
+    }
+  }
 }
