@@ -19,3 +19,14 @@ std::size_t LogSource::timeLineCount() const noexcept
 {
   return timeLines_.size();
 }
+
+bool LogSource::addTimeLineEvent(const std::string& timeLineEventName, const std::regex& pattern) noexcept
+{
+  auto result = timeLineEvents_.emplace(timeLineEventName, pattern);
+  return result.second;
+}
+
+std::size_t LogSource::timeLineEventCount() const noexcept
+{
+  return timeLineEvents_.size();
+}

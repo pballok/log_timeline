@@ -2,6 +2,7 @@
 #define LOGSOURCE_H
 
 #include <vector>
+#include <regex>
 
 #include "logline.h"
 #include "timeline.h"
@@ -22,9 +23,13 @@ public:
   void addTimeLine(const std::string& timeLineName) noexcept;
   std::size_t timeLineCount() const noexcept;
 
+  bool addTimeLineEvent(const std::string& timeLineEventName, const std::regex& pattern) noexcept;
+  std::size_t timeLineEventCount() const noexcept;
+
 private:
   std::vector<LogLine> logLines_;
   std::vector<TimeLine> timeLines_;
+  std::map<std::string, std::regex> timeLineEvents_;
 };
 
 #endif
